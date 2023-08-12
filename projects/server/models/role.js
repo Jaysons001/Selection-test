@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     /**
@@ -14,11 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.User, { foreignKey: "roleID" });
     }
   }
-  Role.init({
-    role: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Role',
-  });
+  Role.init(
+    {
+      role: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Role",
+    }
+  );
   return Role;
 };

@@ -47,7 +47,6 @@ const Register = () => {
     validationSchema: regisScheme,
     onSubmit: async (values) => {
       try {
-        console.log(values);
         await dispatch(registerUser(values));
         onClose();
       } catch (error) {

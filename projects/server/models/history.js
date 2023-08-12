@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, { foreignKey: "userID" });
     }
   }
   History.init(
@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       ClockOut: DataTypes.DATE,
       DaySalary: DataTypes.INTEGER,
       isOvertime: { type: DataTypes.BOOLEAN, defaultValue: true },
+      isDone: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
     {
       sequelize,
       modelName: "History",
       createdAt: "ClockIn",
-      updatedAt: "ClockOut",
     }
   );
   return History;

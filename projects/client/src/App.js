@@ -7,17 +7,18 @@ import Login from "./pages/login";
 import Home from "./pages/home";
 import Admin from "./pages/admin";
 import Registrasi from "./pages/registrasiData";
+import CekLogin from "./middleware/cekLogin";
 
 function App() {
   return (
-    <>
+    <CekLogin>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/regis/:token" element={<Registrasi />} />
       </Routes>
-    </>
+    </CekLogin>
   );
 }
 

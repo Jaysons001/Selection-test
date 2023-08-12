@@ -19,5 +19,8 @@
   },
   "workspaces": [
     "projects/*"
-  ]
+  ],
+  "dependencies": {
+    "react-datepicker": "^4.16.0"
+  }
 }

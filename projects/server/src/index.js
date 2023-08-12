@@ -21,10 +21,11 @@ app.use(
 app.use(express.json());
 
 //#region API ROUTES
-const { authRouter } = require("./routers");
+const { authRouter, historyRouter } = require("./routers");
 // ===========================
 // NOTE : Add your routes here
 app.use("/api/auth", authRouter);
+app.use("/api/log", historyRouter);
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);

@@ -8,6 +8,7 @@ const initialState = {
     email: "",
     role: "",
     fullname: "",
+    roleName: "",
   },
   login: false,
   role: [],
@@ -20,6 +21,7 @@ const authreducer = createSlice({
     setUser: (state, action) => {
       const { id, username, email, roleID, fullName } = action.payload;
       state.user = { id, username, email, roleID, fullName };
+      state.user.roleName = action.payload.Role.role;
     },
     loginSuccess: (state) => {
       state.login = true;
@@ -76,6 +78,39 @@ export const getRole = () => {
       dispatch(setRole(data.result));
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+
+export const registerLanjutan = (values) => {
+  return async (dispatch) => {
+    const { fullname, birthday, username, password, token } = values;
+
+    try {
+      const { data } = await axios.patch(
+        "http://localhost:8000/api/auth/reg",
+        { fullname, birthday, username, password },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("register berhasil");
+      document.location.href = "/";
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+};
+
+export const cekLogin = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      const { data } = await axios.get("http://localhost:8000/api/auth/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(data);
+      dispatch(setUser(data.user));
+    } catch (error) {
+      alert(error);
     }
   };
 };
