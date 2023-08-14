@@ -16,6 +16,8 @@ export const Admin = () => {
     }
   }, [user]);
 
+  if (user.roleID > 1) return <Box>Data Rahasia</Box>;
+
   return (
     <Box>
       <Navbar />

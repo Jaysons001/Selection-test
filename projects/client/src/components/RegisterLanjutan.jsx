@@ -7,6 +7,8 @@ import {
   Center,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   StackDivider,
   Text,
@@ -14,12 +16,17 @@ import {
 import React, { useState } from "react";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
+import { BiShowAlt, BiSolidHide } from "react-icons/bi";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { registerLanjutan } from "../redux/authReducer";
 
 const RegisterLanjutan = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const handleShowPass = () => setShowPassword(!showPassword);
+  const handleShowConfirmpass = () => setShowConfirmPass(!showConfirmPass);
   const [startDate, setStartDate] = useState(new Date());
   const dispatch = useDispatch();
   const handleSubmit = async () => {
@@ -76,7 +83,14 @@ const RegisterLanjutan = () => {
                 Password
               </Heading>
               <Text pt="2" fontSize="sm">
-                <Input placeholder="Password" id="password" />
+                <InputGroup>
+                  <Input placeholder="Password" id="password" type={showPassword ? "text" : "password"} />
+                  <InputRightElement>
+                    <Button variant={"none"} size={"xl"} onClick={handleShowPass}>
+                      {showPassword ? <BiSolidHide /> : <BiShowAlt />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </Text>
             </Box>
             <Box>
@@ -84,7 +98,14 @@ const RegisterLanjutan = () => {
                 Confirm Password
               </Heading>
               <Text pt="2" fontSize="sm">
-                <Input placeholder="Password" id="Confirm Password" />
+                <InputGroup>
+                  <Input placeholder="Password" id="Confirm Password" type={showConfirmPass ? "text" : "password"} />
+                  <InputRightElement>
+                    <Button variant={"none"} size={"xl"} onClick={handleShowConfirmpass}>
+                      {showConfirmPass ? <BiSolidHide /> : <BiShowAlt />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </Text>
             </Box>
           </Stack>

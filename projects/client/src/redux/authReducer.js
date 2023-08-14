@@ -45,7 +45,7 @@ export const loginUser =
   ({ email, password }, navigate) =>
   async (dispatch) => {
     try {
-      const { data } = await axios.post("http://localhost:8000/api/auth/", { email, password });
+      const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/`, { email, password });
       localStorage.setItem("token", data.token);
       dispatch(setUser(data.user));
       dispatch(loginSuccess());
@@ -64,7 +64,7 @@ export const registerUser =
     try {
       console.log(email, roleID, baseSalary);
       const { data } = await axios.post(
-        "http://localhost:8000/api/auth/reg",
+        `${process.env.REACT_APP_API_BASE_URL}/reg`,
         { email, roleID, baseSalary },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -78,7 +78,7 @@ export const registerUser =
 export const getRole = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/auth/role");
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/role`);
       dispatch(setRole(data.result));
     } catch (error) {
       console.log(error);
@@ -90,10 +90,10 @@ export const registerLanjutan = (values) => {
   return async (dispatch) => {
     const { fullname, birthday, username, password, token } = values;
     try {
-      const user = await axios.get("http://localhost:8000/api/auth/", {
+      const user = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       if (user.data.user.fullName) {
         alert("token sudah digunakan");
         document.location.href = "/";
@@ -101,7 +101,7 @@ export const registerLanjutan = (values) => {
       }
 
       const { data } = await axios.patch(
-        "http://localhost:8000/api/auth/reg",
+        `${process.env.REACT_APP_API_BASE_URL}/reg`,
         { fullname, birthday, username, password },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -117,7 +117,7 @@ export const cekLogin = () => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.get("http://localhost:8000/api/auth/", {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await dispatch(setUser(data.user));
@@ -133,7 +133,7 @@ export const cekLogin = () => {
 export const allUser = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/auth/all`, {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/all`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       dispatch(setAllUserAdmin(data.result));

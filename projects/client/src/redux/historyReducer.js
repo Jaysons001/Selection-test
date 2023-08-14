@@ -37,7 +37,7 @@ export const checkIn = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/log/",
+      `${process.env.REACT_APP_API_BASE_URL}/log/`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -51,7 +51,7 @@ export const checkOut = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.patch(
-      "http://localhost:8000/api/log/",
+      `${process.env.REACT_APP_API_BASE_URL}/log/`,
       { ClockOut: new Date(), isDone: true },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -68,7 +68,7 @@ export const getHistory =
   async (dispatch) => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/log/?page=${index}&startDate=${startDate}&endDate=${endDate}`,
+        `${process.env.REACT_APP_API_BASE_URL}/log/?page=${index}&startDate=${startDate}&endDate=${endDate}`,
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
       dispatch(setHistory(res.data.result));
@@ -81,7 +81,7 @@ export const getHistory =
 
 export const isWorking = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:8000/api/log/work", {
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/log/work`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     dispatch(setUserWork(res.data.result));
@@ -96,7 +96,7 @@ export const getSalaryMonth =
     const currentMonth = new Date().getMonth() + 1;
     const selectedMonth = month || currentMonth;
     try {
-      const res = await axios.get(`http://localhost:8000/api/log/salary?month=${selectedMonth}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/log/salary?month=${selectedMonth}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       dispatch(setSalaryMonth(res.data.result));
@@ -111,7 +111,7 @@ export const getSalaryYear =
     const currentYear = new Date().getFullYear();
     const selectedYear = year || currentYear;
     try {
-      const res = await axios.get(`http://localhost:8000/api/log/salary?year=${selectedYear}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/log/salary?year=${selectedYear}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       dispatch(setSalaryYear(res.data.result));

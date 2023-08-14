@@ -10,7 +10,7 @@ const AttendanceLogItem = ({ item }) => {
 
   return (
     <Tr mb={"10px"}>
-      <Td w={"10vw"}>{currentDayOfWeek}</Td>
+      <Td w={"10vw"}>{new Date(ClockIn).toDateString().replace(/ /, ", ")}</Td>
       <Td w={"10vw"}>{new Date(ClockIn).toLocaleTimeString()}</Td>
       <Td w={"10vw"}>{ClockOut ? new Date(ClockOut).toLocaleTimeString() : ""}</Td>
       <Td w={"10vw"}>Rp.{DaySalary},-</Td>
