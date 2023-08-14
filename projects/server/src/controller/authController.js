@@ -37,7 +37,6 @@ const authController = {
       const token = jwt.sign(payload, process.env.JWT_KEY, {
         expiresIn: "24h",
       });
-      user.isLogin = true;
       await user.save();
       return res.status(200).json({ message: "success", user, token });
     } catch (error) {
@@ -53,7 +52,6 @@ const authController = {
       }
       const cekUser = await User.findOne({ where: { [Op.or]: [{ email }] } });
       if (cekUser) return res.status(400).json({ message: "Email sudah terdaftar" });
-      console.log(1);
 
       db.sequelize.transaction(async (t) => {
         const user = await User.create({ email, roleID, baseSalary }, { transaction: t });
@@ -109,6 +107,17 @@ const authController = {
         include: { model: db.Role, attributes: ["role"] },
       });
       return res.status(200).json({ message: "success", user });
+    } catch (error) {
+      return res.status(500).json({ message: error });
+    }
+  },
+
+  getAll: async (req, res) => {
+    try {
+      const result = await db.User.findAll({
+        include: { model: db.Role, attributes: ["role"] },
+      });
+      return res.status(200).json({ message: "success", result });
     } catch (error) {
       return res.status(500).json({ message: error });
     }

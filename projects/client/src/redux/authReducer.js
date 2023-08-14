@@ -12,6 +12,7 @@ const initialState = {
   },
   login: false,
   role: [],
+  allUserAdmin: [],
 };
 
 const authreducer = createSlice({
@@ -22,6 +23,9 @@ const authreducer = createSlice({
       const { id, username, email, roleID, fullName } = action.payload;
       state.user = { id, username, email, roleID, fullName };
       state.user.roleName = action.payload.Role.role;
+    },
+    setAllUserAdmin: (state, action) => {
+      state.allUserAdmin = [...action.payload];
     },
     loginSuccess: (state) => {
       state.login = true;
@@ -85,8 +89,17 @@ export const getRole = () => {
 export const registerLanjutan = (values) => {
   return async (dispatch) => {
     const { fullname, birthday, username, password, token } = values;
-
     try {
+      const user = await axios.get("http://localhost:8000/api/auth/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      if (user.data.user.fullName) {
+        alert("token sudah digunakan");
+        document.location.href = "/";
+        return;
+      }
+
       const { data } = await axios.patch(
         "http://localhost:8000/api/auth/reg",
         { fullname, birthday, username, password },
@@ -107,13 +120,28 @@ export const cekLogin = () => {
       const { data } = await axios.get("http://localhost:8000/api/auth/", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(data);
-      dispatch(setUser(data.user));
+      await dispatch(setUser(data.user));
     } catch (error) {
-      alert(error);
+      if (localStorage.getItem("token")) {
+        alert("Anda Logout");
+        dispatch(logoutSuccess());
+      }
     }
   };
 };
 
-export const { setUser, loginSuccess, logoutSuccess, setRole } = authreducer.actions;
+export const allUser = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/auth/all`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      dispatch(setAllUserAdmin(data.result));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const { setUser, loginSuccess, logoutSuccess, setRole, setAllUserAdmin } = authreducer.actions;
 export default authreducer.reducer;

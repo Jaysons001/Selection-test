@@ -24,11 +24,12 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRole, registerUser } from "../redux/authReducer";
 
 const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
@@ -47,7 +48,9 @@ const Register = () => {
     validationSchema: regisScheme,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true);
         await dispatch(registerUser(values));
+        setIsLoading(false);
         onClose();
       } catch (error) {
         console.error(error);
@@ -109,7 +112,7 @@ const Register = () => {
               </Table>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme={"facebook"} type="submit">
+              <Button colorScheme={"facebook"} type="submit" isLoading={isLoading} loadingText="Registering...">
                 Register
               </Button>
             </ModalFooter>

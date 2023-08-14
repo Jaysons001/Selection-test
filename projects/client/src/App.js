@@ -11,14 +11,16 @@ import CekLogin from "./middleware/cekLogin";
 
 function App() {
   return (
-    <CekLogin>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/regis/:token" element={<Registrasi />} />
-      </Routes>
-    </CekLogin>
+    <>
+      <CekLogin>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/regis/:token" element={<Registrasi />} />
+        </Routes>
+      </CekLogin>
+    </>
   );
 }
 

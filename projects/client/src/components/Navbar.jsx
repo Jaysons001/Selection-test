@@ -1,7 +1,14 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutSuccess } from "../redux/authReducer";
 
 export const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutSuccess());
+  };
   return (
     <Box bgColor={"white"} borderBottom={"3px solid #E0E0E0"}>
       <Flex p={3} mx={"15vw"} justifyContent={"space-between"}>
@@ -11,7 +18,14 @@ export const Navbar = () => {
             LOELOS
           </Text>
         </Flex>
-        <Text>Avatar Badge ETC</Text>
+        <Menu>
+          <Avatar as={MenuButton} />
+          <MenuList>
+            <MenuItem minH="48px" onClick={handleLogout}>
+              <span>Log Out</span>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </Box>
   );

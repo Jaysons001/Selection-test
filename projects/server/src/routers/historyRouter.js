@@ -7,4 +7,5 @@ router.post("/", verifyToken, historyController.createLog);
 router.get("/", verifyToken, historyController.getHistory);
 router.patch("/", verifyToken, historyController.updateLog);
 router.get("/work", verifyToken, historyController.isWorking);
+router.get("/salary", verifyToken, historyController.getMonth);
 module.exports = router;
