@@ -10,7 +10,7 @@ const AdminUser = () => {
 
   useEffect(() => {
     dispatch(allUser());
-  }, [allUserAdmin]);
+  }, []);
 
   return (
     <Box mt={"2vh"} mx={"2vw"}>

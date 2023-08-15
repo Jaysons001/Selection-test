@@ -26,7 +26,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRole, registerUser } from "../redux/authReducer";
+import { allUser, getRole, registerUser } from "../redux/authReducer";
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +52,7 @@ const Register = () => {
         await dispatch(registerUser(values));
         setIsLoading(false);
         onClose();
+        await dispatch(allUser());
       } catch (error) {
         console.error(error);
       }
@@ -63,7 +64,7 @@ const Register = () => {
   }, []);
 
   const { role } = useSelector((state) => state.authreducer);
-
+  console.log(role);
   return (
     <Box>
       <Button colorScheme="facebook" onClick={onOpen}>

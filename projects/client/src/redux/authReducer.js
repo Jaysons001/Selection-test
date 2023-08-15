@@ -64,7 +64,7 @@ export const registerUser =
     try {
       console.log(email, roleID, baseSalary);
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/reg`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/reg`,
         { email, roleID, baseSalary },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -78,7 +78,7 @@ export const registerUser =
 export const getRole = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/role`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/role`);
       dispatch(setRole(data.result));
     } catch (error) {
       console.log(error);
@@ -101,7 +101,7 @@ export const registerLanjutan = (values) => {
       }
 
       const { data } = await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/reg`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/reg`,
         { fullname, birthday, username, password },
         { headers: { Authorization: `Bearer ${token}` } }
       );
